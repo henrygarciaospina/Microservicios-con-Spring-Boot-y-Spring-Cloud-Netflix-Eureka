@@ -35,13 +35,13 @@ public class ProductoController {
 	public Producto detalle(@PathVariable Long id) {
 		Producto producto = productoService.findById(id);
 		producto.setPort(port);
-		
+		/*
 		try {
 			Thread.sleep(2000L);
 		}catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+		*/
 		return producto;
 	}
 }
