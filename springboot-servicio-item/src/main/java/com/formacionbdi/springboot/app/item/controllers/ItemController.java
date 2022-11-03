@@ -21,12 +21,13 @@ public class ItemController {
 	@Qualifier("serviceFeign")
 	private ItemService itemService;
 	
+	
 	@GetMapping("/listar")
 	public List<Item> listar(){
 		return itemService.findAll();
 	}
 	
-	//@HystrixCommand(fallbackMethod="metodoAlternativo")
+	@HystrixCommand(fallbackMethod="metodoAlternativo")
 	@GetMapping("/ver/{id}/cantidad/{cantidad}")
 	public Item detalle(@PathVariable Long id, @PathVariable Integer cantidad) {
 		return itemService.findById(id, cantidad);
