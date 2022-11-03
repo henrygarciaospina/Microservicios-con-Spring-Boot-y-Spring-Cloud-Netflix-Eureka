@@ -17,6 +17,8 @@ import com.formacionbdi.springboot.app.productos.models.service.IProductoService
 @RestController
 public class ProductoController {
 	
+	@Autowired
+	private Environment env;
 	@Value("${server.port}")
 	private Integer port;
 	
@@ -26,22 +28,16 @@ public class ProductoController {
 	@GetMapping("/listar")
 	public List<Producto> listar(){
 		return productoService.findAll().stream().map(producto ->{
-			producto.setPort(port);
-			return producto;
+		   producto.setPort(Integer.parseInt(env.getProperty("local.server.port")));
+		   return producto;
 		}).collect(Collectors.toList());
 	}
 	
 	@GetMapping("/ver/{id}")
 	public Producto detalle(@PathVariable Long id) {
 		Producto producto = productoService.findById(id);
-		producto.setPort(port);
-		/*
-		try {
-			Thread.sleep(2000L);
-		}catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		*/
+		producto.setPort(Integer.parseInt(env.getProperty("local.server.port")));
+		
 		return producto;
 	}
 }
